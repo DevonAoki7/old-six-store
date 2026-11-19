@@ -15,7 +15,7 @@ class ShopRepository extends BaseRepository
         $this->model = $ShopModel;
     }
 
-    public function getShopNameList()
+    public function getShopNameList(): Collection
     {
         return Cache::remember(
             CacheKeyConstant::MANAGE_SHOPS_PLAIN_NAME,
@@ -26,24 +26,11 @@ class ShopRepository extends BaseRepository
         );
     }
 
-    public function getPlainShopList()
+    public function getPlainShopList(): Collection
     {
         return $this->model
             ->query()
-            ->with('shopMenus')
             ->where('status', 1)
             ->get();
-    }
-
-    public function getShopList(): Collection
-    {
-        return Cache::remember(
-            CacheKeyConstant::MANAGE_SHOPS,
-            now()->addDay(),
-            fn() => $this->model->query()
-                ->with(['shopCountries' => function ($query) {
-                    $query->orderBy('sort', 'asc');
-                }])->orderBy('sort')->get()
-        );
     }
 }

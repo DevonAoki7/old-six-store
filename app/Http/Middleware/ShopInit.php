@@ -28,7 +28,7 @@ class ShopInit
     public function handle(Request $request, Closure $next)
     {
         $shopName = $request->header('X-Mmos-Shop');
-        $availableShops = $this->shopRepository->getShopList();
+        $availableShops = $this->shopRepository->getPlainShopList();
         $currentShop = $availableShops->where('shop_name', $shopName)->where('status', 1)->first();
         if (empty($currentShop)) {
             throw new CommonException(CommonCode::MMOS_SHOP_COUNTRY_ERROR);

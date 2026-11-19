@@ -15,9 +15,4 @@ class ShopModel extends Model
     {
         return $this->hasMany(ShopCountryModel::class, 'shop_name', 'shop_name');
     }
-
-    public function shopMenus()
-    {
-        return $this->hasMany(ShopMenuModel::class, 'shop_name', 'shop_name');
-    }
 }

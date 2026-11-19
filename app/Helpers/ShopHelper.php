@@ -21,6 +21,7 @@ class ShopHelper
             $baseDbConfig = config('database.connections.mysql');
         }
         if (isset($baseDbConfig)) {
+            $baseDbConfig['database'] = $shop->database;
             $baseDbConfig['write']['database'] = $shop->database;
             $baseDbConfig['read']['database'] = $shop->database;
             // 第一行是设置 php 语言时区，第二行是 laravel 框架的时区
