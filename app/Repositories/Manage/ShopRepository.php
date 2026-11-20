@@ -15,6 +15,14 @@ class ShopRepository extends BaseRepository
         $this->model = $ShopModel;
     }
 
+    public function find(array $attr): ShopModel
+    {
+        return $this->model->query()
+            ->where($attr)
+            ->where('status', 1)
+            ->first();
+    }
+
     public function getShopNameList(): Collection
     {
         return Cache::remember(

@@ -17,3 +17,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/app/Ssl/Oidc/oidc-private.pem
+/app/Ssl/Oidc/oidc-public.pem

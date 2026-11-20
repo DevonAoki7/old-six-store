@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Shop\OidcController;
+use App\Http\Controllers\Shop\OidcAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +22,9 @@ Route::get('/oidc', function (Request $request) {
     ]);
 });
 
-
+Route::prefix('/{shop}')->group(function () {
+    Route::get('.well-known/openid-configuration', [OidcController::class, 'discovery']);
+    Route::get('jwks.json', [OidcController::class, 'jwks']);
+    
+    Route::get('authorize', [OidcAuthController::class, 'authorize']);
+});
