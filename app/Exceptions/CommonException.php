@@ -2,20 +2,43 @@
 
 namespace App\Exceptions;
 
-use App\Enums\ManageCode;
-use Symfony\Component\HttpFoundation\Response as ResponseAlias;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Throwable;
 
 class CommonException extends HttpException
 {
+    protected int|string $errorCode;
+
+    protected mixed $data;
+
     public function __construct(
-        int $code,
-        $message = '',
-        $statusCode = ResponseAlias::HTTP_OK,
-        \Exception $previous = null,
+        int|string $errorCode = 'COMMON_ERROR',
+        string $message = 'Request failed',
+        int $statusCode = Response::HTTP_BAD_REQUEST,
+        mixed $data = null,
+        ?Throwable $previous = null,
         array $headers = []
     ) {
-        $message = empty($message) ? ManageCode::getDescription($code) : $message;
-        parent::__construct($statusCode, $message, $previous, $headers, $code);
+        $this->errorCode = $errorCode;
+        $this->data = $data;
+
+        parent::__construct(
+            $statusCode,
+            $message,
+            $previous,
+            $headers,
+            is_int($errorCode) ? $errorCode : 0
+        );
+    }
+
+    public function getErrorCode(): int|string
+    {
+        return $this->errorCode;
+    }
+
+    public function getData(): mixed
+    {
+        return $this->data;
     }
 }
