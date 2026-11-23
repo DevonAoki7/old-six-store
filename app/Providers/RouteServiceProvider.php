@@ -37,6 +37,10 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web.php'));
             Route::middleware('oidc')
                 ->group(base_path('routes/oidc.php'));
+
+            Route::middleware('api')
+                ->prefix('openapi')
+                ->group(base_path('routes/openapiCommon.php'));
         });
     }
 }

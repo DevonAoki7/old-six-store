@@ -22,7 +22,7 @@ Route::get('/oidc', function (Request $request) {
     ]);
 });
 
-Route::prefix('/{shop}')->group(function () {
+Route::middleware('shopInitOidc')->prefix('/{shop}')->group(function () {
     Route::get('.well-known/openid-configuration', [OidcController::class, 'discovery']);
     Route::get('jwks.json', [OidcController::class, 'jwks']);
     

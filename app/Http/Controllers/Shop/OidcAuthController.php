@@ -15,9 +15,9 @@ class OidcAuthController extends Controller
     }
     public function authorize(AuthorizeRequest $request)
     {
-        $prarms = $request->validated();
-        $prarms['shop'] = $request->route('shop');
-        $response = $this->oidcAuthBusiness->authorize($prarms);
-        return response()->json($response);
+        $params = $request->validated();
+        $params['shop'] = $request->route('shop');
+        $params['fullUrl'] = $request->fullUrl();
+        return $this->oidcAuthBusiness->authorize($params);
     }
 }
